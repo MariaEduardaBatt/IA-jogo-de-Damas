@@ -1,45 +1,44 @@
-# Trabalho Prático 1: Jogo de Damas (MiniMax)
-**Disciplina:** Inteligência Artificial  
-**Instituição:** IFSULDEMINAS - Campus Poços de Caldas  
-**Professor:** Douglas Castilho  
-**Professor:** Maria Eduarda Batista Henrique
----
+# IA-jogo-de-Damas
 
-## 1. Visão Geral do Projeto
-Este projeto consiste no desenvolvimento de um jogo de damas em um tabuleiro reduzido (**6x6**), onde um jogador humano (Brancas/Min) enfrenta uma Inteligência Artificial (Pretas/Max). O motor de decisão da IA é baseado no algoritmo clássico **MiniMax**, com uma árvore de possibilidades de altura fixa e heurísticas personalizadas.
+Motor de Inteligência Artificial para o jogo de Damas (tabuleiro 6x6) em Java, com interface gráfica em Swing, em que a IA decide as jogadas pelo algoritmo **MiniMax**.
 
-## 2. Lógica e Regras do Jogo
-O sistema implementa as regras oficiais de damas com as adaptações solicitadas:
-- **Captura Obrigatória:** Se houver uma peça adversária que possa ser capturada, o jogador é obrigado a fazê-lo. O sistema prioriza a jogada que captura o **maior número de peças**.
-- **Movimentação de Damas:** As damas podem se mover múltiplas casas nas diagonais e capturar em qualquer direção.
-- **Posição de Parada:** Após uma captura (simples ou múltipla), a peça para na casa imediatamente subsequente à última peça capturada.
-- **Condições de Vitória/Empate:**
-    - Vitória por extermínio (oponente sem peças).
-    - Vitória por travamento (oponente sem movimentos válidos).
-    - Empate técnico (apenas 2 damas no tabuleiro sem captura imediata).
+## Sobre
 
-## 3. Inteligência Artificial: Algoritmo MiniMax
-O algoritmo MiniMax funciona simulando todas as jogadas possíveis até uma determinada profundidade para encontrar a jogada que maximiza o ganho da IA e minimiza o ganho do usuário.
+Projeto desenvolvido em Java para a disciplina de Inteligência Artificial. O usuário joga com as peças brancas (jogador **MIN**) e a IA joga com as pretas (jogador **MAX**). A IA constrói uma árvore de possibilidades de até **10 níveis** e aplica o MiniMax com uma heurística própria para escolher a melhor jogada.
 
-### Estratégia de Busca e Árvore
-- **Classe Node:** Utilizada obrigatoriamente para construir a árvore de estados. Cada nó armazena o estado da matriz, a jogada realizada e o valor MiniMax calculado.
-- **Altura da Árvore:** Fixada em **10 níveis**.
-- **Inteligência Limitada:** O usuário define um nível de 1 a 9. Até esse nível, a IA avalia todas as ramificações. Após esse nível, as jogadas são simuladas de forma **aleatória** até atingir a altura 10, simulando uma "visão limitada" do futuro.
+## Funcionalidades
 
-### Função de Avaliação e Heurística
-A avaliação dos estados finais da árvore segue dois critérios:
-1. **Avaliação Padrão:**
-    - `+1.0`: Vitória da IA (Max).
-    - `-1.0`: Vitória do Usuário (Min).
-    - `0.0`: Empate.
-2. **Heurística Inventada (Estados Intermediários):**
-    Como a árvore raramente atinge o fim do jogo em 10 níveis, implementamos uma heurística baseada em pesos:
-    - Peça Comum: **3 pontos**.
-    - Dama: **7 pontos**.
-    - O valor final é calculado pela diferença de pontos entre IA e Usuário, normalizado pela função `Math.tanh` para manter o resultado entre -1 e 1.
+- Tabuleiro reduzido **6x6** com as regras clássicas de damas.
+- **Captura obrigatória**: quando há captura disponível, o jogo só permite capturar, priorizando a sequência que remove o maior número de peças.
+- **Damas** que se movem por múltiplas casas na diagonal e capturam em qualquer direção, com promoção automática das peças.
+- Condições de fim de jogo: eliminação de peças, travamento (jogador sem movimentos válidos) e empate técnico (duas damas sem captura imediata).
+- IA com **MiniMax**: árvore de estados com profundidade fixa (10 níveis) e nível de inteligência configurável (1–9) — acima do nível escolhido, a busca simula jogadas aleatórias ("visão limitada" do futuro).
+- **Heurística de avaliação**: pesos 3 para peça comum e 7 para dama, com resultado normalizado pela função `tanh`; vitória da IA = +1.0, do usuário = −1.0 e empate = 0.0.
+- Interface gráfica em **Swing**: escolha de quem começa, seletor do nível de inteligência, destaque das jogadas possíveis e botão de reiniciar.
 
-## 4. Estrutura do Código
-- `Tabuleiro.java`: Gerencia a matriz, valida movimentos, executa capturas e verifica regras de promoção.
-- `Node.java`: Estrutura de dados para a árvore de busca do MiniMax.
-- `MainInterfaceGrafica.java`: Gerencia a interface Swing, o loop do jogo e a integração com o algoritmo de IA.
+## Tecnologias
 
+- **Java** (pacote `main`)
+- **Swing** (`javax.swing`) para a interface gráfica
+- Projeto simples, sem gerenciador de dependências (sem Maven/Gradle)
+
+## Estrutura
+
+```
+src/
+└── main/
+    ├── MainInterfaceGrafica.java   # interface Swing, fluxo do jogo e integração com a IA
+    ├── Node.java                   # nó da árvore de busca (estado + valor MiniMax)
+    └── Tabuleiro.java              # lógica do tabuleiro, movimentos, capturas e promoção
+```
+
+## Como executar
+
+Abra a pasta do projeto em uma IDE Java (ex.: IntelliJ IDEA ou Eclipse) e execute a classe `main.MainInterfaceGrafica`.
+
+Também é possível compilar e executar pelo terminal:
+
+```
+javac -d out src/main/*.java
+java -cp out main.MainInterfaceGrafica
+```
