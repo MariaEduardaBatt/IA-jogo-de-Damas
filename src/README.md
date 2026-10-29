@@ -2,7 +2,7 @@
 **Disciplina:** Inteligência Artificial  
 **Instituição:** IFSULDEMINAS - Campus Poços de Caldas  
 **Professor:** Douglas Castilho  
-**Professor:** Maria Eduarda Batista Henrique
+**Aluna:** Maria Eduarda Batista Henrique  
 ---
 
 ## 1. Visão Geral do Projeto
